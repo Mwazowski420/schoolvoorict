@@ -1,0 +1,102 @@
+#wireless
+access point op WPA2-PSK geef dan een wachtwoord
+ga dan op de laptop zet hem uit en zet een wpc300n erin voor wireless verbinding tot de accesspoint
+op de laptop naar desktop> pc wireless>connect>refresh>default>connect>geef dan de wachtwoord
+of ga naar laptop config>wireless> vul de ssid in van de accespoint>wpa2-psk>voer de wachtwoord in
+
+#mls
+en
+conf t
+int gig1/0/1
+no switchport
+ip add 10.10.10.2 255.255.255.252
+no sh
+vlan 10
+int vlan 10
+ip add 192.168.10.1 255.255.255.0
+vlan 20
+int vlan 20
+ip add 192.168.20.1 255.255.255.0
+vlan 30
+int vlan 30
+ip add 192.168.30.1 255.255.255.0
+vlan 40
+int vlan 40
+ip add 192.168.40.1 255.255.255.0
+vlan 50
+int vlan 50
+ip add 192.168.50.1 255.255.255.0
+int range gig1/0/2-4
+switchport mode trunk
+ip dhcp pool vlan10
+network 192.168.10.0 255.255.255.0
+default-router 192.168.10.1
+ip dhcp pool vlan20
+network 192.168.20.0 255.255.255.0
+default-router 192.168.20.1
+ip dhcp pool vlan30
+network 192.168.30.0 255.255.255.0
+default-router 192.168.30.1
+ip dhcp pool vlan40
+network 192.168.40.0 255.255.255.0
+default-router 192.168.40.1
+ip dhcp pool vlan50
+network 192.168.50.0 255.255.255.0
+default-router 192.168.50.1
+ip routing
+router ospf 1
+network 192.168.10.0 0.0.0.255 area 1
+network 192.168.20.0 0.0.0.255 area 1
+network 192.168.30.0 0.0.0.255 area 1
+network 192.168.40.0 0.0.0.255 area 1
+network 192.168.50.0 0.0.0.255 area 1
+network 10.10.10.0 0.0.0.3 area 1
+vtp domain Geslaagd
+vtp mode server
+
+#switches
+en
+conf t
+int range fa0/1-4
+switch access vlan 10
+int range fa0/5-9
+switch access vlan 20
+int range fa0/10-14
+switch access vlan 30
+int range fa0/15-19
+switch access vlan 40
+int range fa0/20-24
+switch access vlan 50
+vtp domain Geslaagd
+vtp mode client
+
+#router
+#physical voor fiber glc-lh-smd
+en
+conf t
+int gig1/0/1
+ip add 10.10.10.1 255.255.255.252
+no sh
+int gig0/0/0
+ip add 10.10.11.2 255.255.255.252
+no sh
+int gig0/0/2
+no sh
+router ospf 1
+network 10.10.10.0 0.0.0.3 area 1
+network 10.10.11.0 0.0.0.3 area 1
+#server
+#physical voor fiber Pt-host-nm-1ffe
+
+#router-cluster
+en
+conf t
+int gig0/0/1
+ip add 10.10.11.1 255.255.255.252
+no sh
+int gig0/0/0
+ip add 192.168.100.1 255.255.255.0
+no sh
+router ospf 1
+network 192.168.100.0 0.0.0.255 area 1
+network 10.10.11.0 0.0.0.3 area 1
