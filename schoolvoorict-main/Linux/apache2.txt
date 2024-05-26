@@ -1,0 +1,33 @@
+#apache2
+
+su
+rootww
+systemctl stop firewalld.service
+zypper install apache2
+cd /srv/www
+mkdir vhosts
+cd vhosts
+mkdir "sitenaam.nl"
+cd sitenaam.nl
+vi index.html
+"zet hier je text in wat je wilt op de website"
+sla dit op(:wq!)
+cd /etc/apache2
+ls
+cd vhosts.d
+ls
+cp vhost.template "sitenaam.conf" (gebruikt geen .nl het moet .conf zijn)
+vi sitenaam.conf
+(nu zie je een grote template)
+nu moet je in commando modus gaan en deze commando overnemen
+:1,$ s/dummy-host.example.com/sitenaam.nl/g (dit doe je zodat alle dummyhost vervangen word in de template door je sitenaam)
+sla dit op (:wq!)
+ip a(hier moet je je eigen adress onhouden)
+vi /etc/hosts
+hier moet je je eigen adress zetten onder de local host vergeet geen tab tussen de ip en sitenaam te zetten met de sitenaam voorbeeld:
+127.0.0.1    localhost
+192.168.23.134  ishan.nl
+192.168.23.134  arjan.su
+dit sla je op(:wq!)
+systemctl start apache2.service
+nu kan je op firefox je website lokaal vinden

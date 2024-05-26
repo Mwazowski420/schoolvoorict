@@ -1,0 +1,105 @@
+#MLS
+
+vlan 10
+int vlan 10
+ip add 192.168.10.1 255.255.255.0
+vlan 20
+int vlan 20
+ip add 192.168.20.1 255.255.255.0
+vlan 30
+int vlan 30
+ip add 192.168.30.1 255.255.255.0
+vlan 40
+int vlan 40
+ip add 192.168.40.1 255.255.255.0
+vlan 50
+int vlan 50
+ip add 192.168.50.1 255.255.255.0
+vtp domain Geslaagd
+vtp mode server
+
+ip dhcp pool vlan10
+network 192.168.10.0 255.255.255.0
+default-router 192.168.10.1
+ip dhcp pool vlan20
+network 192.168.20.0 255.255.255.0
+default-router 192.168.20.1
+ip dhcp pool vlan30
+network 192.168.30.0 255.255.255.0
+default-router 192.168.30.1
+ip dhcp pool vlan40
+network 192.168.40.0 255.255.255.0
+default-router 192.168.40.1
+ip dhcp pool vlan50
+network 192.168.50.0 255.255.255.0
+default-router 192.168.50.1
+int g1/0/1
+no switchport
+ip add 10.10.10.2 255.255.255.252
+no sh
+ip routing
+router ospf 1
+network 192.168.10.0 0.0.0.255 area 1
+network 192.168.20.0 0.0.0.255 area 1
+network 192.168.30.0 0.0.0.255 area 1
+network 192.168.40.0 0.0.0.255 area 1
+network 192.168.50.0 0.0.0.255 area 1
+network 10.10.10.0 0.0.0.3 area 1
+
+#SWITCH123
+
+en
+conf t
+int range fa0/1-4
+switchport access vlan 10
+int range fa0/5-9
+switchport access vlan 20
+int range fa0/10-14
+switchport access vlan 30
+int range fa0/15-19
+switchport access vlan 40
+int range fa0/20-24
+switchport access vlan 50
+vtp domain Geslaagd
+vtp mode client
+
+
+#router1
+en
+conf t
+int g0/0/1
+ip add 10.10.10.1 255.255.255.252
+no sh
+int g0/0/0
+ip add 10.10.11.2 255.255.255.252
+no sh
+router ospf 1
+network 10.10.10.0 0.0.0.3 area 1
+network 10.10.11.0 0.0.0.3 area 1
+
+
+#routercluster
+en
+conf t
+int g0/0/0
+ip add 192.168.100.1 255.255.255.252
+no sh
+int g0/0/1
+ip add 10.10.11.1 255.255.255.252
+no sh
+router ospf 1
+network 192.168.100.0 0.0.0.3 area 1
+network 10.10.11.0 0.0.0.3 area 1
+
+
+int range f0/10-11
+
+channel-group 1 mode active
+
+exit
+
+int port-channel 1
+
+sw mo tr
+
+sw tr all vlan 1,10,20

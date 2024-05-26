@@ -1,0 +1,26 @@
+#crontab met script
+su
+root
+(mkdir walidbuik
+cd walidbuik
+touch kipnuggets milkshaketollie patat rijst frikandel kipcorn) hier maak ik een map en files om een backup van te maken
+mkdir /tmp/backup (hier komt dan alle backups in)
+mkdir code (ik maak hier een map zodat de codes overzichterlijker zijn)
+cd code
+vi backup.sh
+#binbash
+LOGFILE="/mnt/backup/logfile$(date +'%Y-%m-%d%H-%M-%S')"
+rsync -av /home/student/walidbuik /mnt/backup>>$LOGFILE 2>&1 (**let goed op je eigen paths in de logfile= en de rsync)
+sla dit op(:wq!)
+cd /home/student/code/
+nu moeten we execute rechten geven aan de backup.sh dit doe je met:
+chmod +x backup.sh (nu is je file executeable dit kan je checken met ls als je file nu groen is werkt het)
+crontab -e 
+/1 * * * /home/student/code/backup.sh (nu voert hij elke minuut deze script uit en update hij ook de logfile)
+|   | | | |
+|   | | | ----- Day of the week (0 - 7) (Sunday = 0 or 7)
+|   | | ------- Month (1 - 12)
+|   | --------- Day of the month (1 - 31)
+|    ----------- Hour (0 - 23)
+------------- Minute (0 - 59)
+(vergeet niet nieuwe )

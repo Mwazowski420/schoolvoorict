@@ -1,0 +1,55 @@
+Linux examen
+(Mag gebruik maken van internet)
+Samba
+
+Firewall altijd als eerst uit
+
+Veel screenshots
+
+Smbpasswd -a
+
+Group owner maken van map zodar users in de group toegang hebben tot de map
+
+Id (naam van user) om te zien welke groep hij lid van is
+
+Path /home/
+Writeable = yes
+
+Verbinding maken met andere referencies
+
+G:inkoop:r-x /home/verkoop/
+Als r-x —- wordt dan zijn alle rechten weg
+——————————————————————
+APACHE2
+
+Zypper search apache2
+/srv/www
+Mkdir vhost
+Cd vhost
+Mdkir ishan.nl
+Mkdir walid.com
+Mkdir lars.de
+Mkdir branco.org
+Vi branco.org/index.html (kan ook nano gebruiken)
+Mv naam veranderen
+Cd /etc/apache2
+Ls
+Cd vhost.d/
+Ls
+Cp vhost.template walid.conf
+Cp vhost.template branco.conf
+Vi walid.conf
+Virtualhost aanpassen
+
+Esq :1,$ s/dummy-host.example.com/branco.org/g
+Vi /etc/hosts
+Ip (naam van website)
+Doe dit onder localhost^
+
+————————————————————
+Linux script (crontab)
+Crontab -l checken
+Crontab -e maken
+Vi backup.sh
+Chmod +x (sh naam)
+Crontab backup.sh zodat die wordt uitgevoerd voortdurend

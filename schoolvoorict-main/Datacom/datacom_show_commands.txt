@@ -1,0 +1,27 @@
+do show run
+
+do show int
+
+do show run conf
+
+do show ip int br
+
+do show int g/f_ sw
+
+do show vlan br
+
+do show int tr
+
+do show mac add table
+
+do show ip ssh
+
+do show ip route
+
+do show ip protocol
+
+do show access-list
+
+do show run | include int | access
+
+do show cdp neighbors

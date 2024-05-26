@@ -1,0 +1,87 @@
+mkdir "map aanmaken"
+
+touch "bestand aanmaken"
+
+vi "bestande bewerken"
+
+useradd "gebruiker aanmaken"
+
+useradd -m "gebruiker aanmaken met home map"
+
+groupadd "groep aanmaken"
+
+groupadd -g "groep aanmaken met ID" voorbeeld: groupadd -g 500 groepnaam
+
+chown "map/bestand eigenaar wijzigen" voorbeeld: chown gebruikersnaam mapnaam
+
+chgrp "groep eigenaar wijzigen voorbeeld: chgrp groepnaam gebruikersnaam
+
+usermod -aG "gebruiker toevoegen aan een groep" voorbeeld: usermod -aG groepnaam gebruikersnaam
+
+gpasswd -d "gebruiker verwijderen uit de groep" voorbeeld: gpasswd gebruikersnaam groepnaam
+
+chmod "bestanden/map rechten wijzigen" voorbeeld: chmod 070 mapnaam #070 is een voorbeeld
+
+zypper install 'naam van de app'
+
+systemctl start 'naam van een service' "Services aanzetten
+
+systemctl stop 'naam van een service'
+
+systemctl restart 'naam van een service'
+
+systemctl enable 'naam van een service' "Je kan een service permanent aanzetten"
+
+firewall-cmd --add-service=samba --permanent "Samba service permanent toevoegen aan firewall zodat de services niet meer geblokkeerd worden"
+
+firewall-cmd --reload
+
+uitzondering samba server:
+
+setfacl -m g:groupB:r-x /home/samba/Test "Toegang verlenen aan bepaalde groep tot bepaalde map"
+
+setfacl -m o::--- /home/samba/Test "Geen toegang voor other"
+
+
+rsync = kopieert bestanden naar andere locatie en check of ze gewijzigd zijn
+-a = attributen van de bestanden worden meegenomen
+-v = je krijgt feedback na het kopiëren over wat er gekopieerd is
+
+--delete = delete bestanden
+
+crontab = vastgestelde tijden een command automatisch uit te laten voeren.
+
+minuten = 0-59
+uur van de dag = 0-24
+dag van de maand = 1-31
+maand van het jaar = 1-12
+dag van de week = 0-6 ( 0= zondag)
+
+crontab -l = lijst opvragen van alle crontabs waar jij rechten op hebt
+crontab -r = verwijder je het
+*/1 = het command voert het elke minuut uit
+
+mail = je ziet mails van crontab
+
+>> = de feedback van de nieuwe back-uo word automatisch toegevoegd aan de logfile
+
+she-bang = #!/bin/bash
+
+bash = bourne again shell
+
+env = je ziet alle standaard variabelen
+
+export = variabelen aanmaken
+
+env | grep *variabel* = check je het of het in de shell is
+
+unset distro = verwijder je het
+
+datum = +%d-%m-%y-$H:%M
+
+rpm -q samba = geeft antwoord of samba is geïnstalleerd is
+
+-eq = zijn ze gelijk
+-gt = is de eerste groter dan de tweede
+-it = is de eerste kleiner dan de tweede
+

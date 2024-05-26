@@ -1,0 +1,11 @@
+int f __
+
+sw mode acc
+
+sw acc vlan __
+
+sw port-security max 5
+
+sw port-security violation protect
+
+sw port-security mac-add sticky

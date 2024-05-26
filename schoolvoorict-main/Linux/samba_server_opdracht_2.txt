@@ -1,0 +1,32 @@
+Handleiding Samba server  opdracht 2 
+
+Bij opdracht mogen de gebruikers van de beide groepen de data van elkaar niet zien maar nu mogen ze wel de data van elkaar allen lezen “read en excute”.   
+
+Machine1 Linux 
+
+Open konsole 
+
+su       “daarna wachwoord van de root” 
+
+cd /home 
+
+vi /etc/samba/smb.conf   “hier moeten nog twee regels toegevoegd worden” 
+ 
+[Administratie] 
+                   path = /home/Administratie 
+                   writeable = yes 
+                   valid user = @administratie,@verkoop 
+[Verkoop] 
+                   path = /home/Verkoop 
+                   writeable = yes 
+                   valid user = @verkoop,@administratie 
+ 
+sla dit op “ESC daarna :wq! En druk op enter” 
+
+setfacl -m g:administratie:r-x Verkoop 
+
+setfacl -m g:verkoop:r-x Administratie 
+
+systemctl restart smb.service 
+
+Nu kan opnieuw verbinding maken met de shares en dan testen of de gebruiker van Administratie les toegang heeft tot de share Verkoop. 

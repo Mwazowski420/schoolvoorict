@@ -1,0 +1,15 @@
+no ip domain-name
+
+ip domain-name CCNA . com
+
+crypto key generate rsa 1024
+
+user Student secret cisco
+
+ip ssh vers 2
+
+line vty 0 15
+
+trans input ssh
+
+login local

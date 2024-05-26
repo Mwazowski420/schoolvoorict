@@ -1,0 +1,9 @@
+USE MBO_ICT;
+
+CREATE USER MijnAchternaam@'%' IDENTIFIED BY 'MoeilijkPaswoord';
+
+GRANT SELECT, INSERT ON Studenten TO MijnAchternaam@'%';
+
+GRANT SELECT ON Klassen TO MijnAchternaam@'%';
+
+GRANT SELECT ON Docenten TO MijnAchternaam@'%';

@@ -1,0 +1,60 @@
+Handleiding Samba server  opdracht 1   
+
+Machine1 Linux 
+
+Open konsole 
+
+su       “daarna wachwoord van de root” 
+
+cd /home 
+
+mkdir Administratie 
+
+mkdir Verkoop 
+
+groupadd administratie 
+
+groupadd verkoop 
+
+chgrp administratie Administratie 
+
+chgrp verkoop Verkoop                    “Verkoop is een map en verkoop met klein letter is groepnaam” 
+
+chmod 070 Administratie 
+
+chmod 070 Verkoop 
+
+useradd cora 
+
+passwd cora               “geef twee keer Linux wachtwoord, bijvoorbeeld Welkom01 en Welkom01” 
+
+smbpasswd -a cora     “geef twee keer samba wachtwoord, bijvoorbeeld Welkom01 en Wekom1  
+
+useradd jan 
+
+passwd jan                “geef twee keer Linux wachtwoord, bijvoorbeeld Welkom01 en Welkom01” 
+
+smbpasswd -a jan     “geef twee keer samba wachtwoord, bijvoorbeeld Welkom01 en Wekom01”  
+
+usermod -aG administratie cora 
+
+usermod -aG verkoop jan 
+
+systemctl start smb.service 
+
+systemctl stop firewalld.service 
+
+vi /etc/samba/smb.conf 
+voeg de volgende regels in configuratiebestand: 
+[Administratie] 
+                   path = /home/Administratie 
+                   writeable = yes 
+[Verkoop] 
+                   path = /home/Verkoop 
+                   writeable = yes 
+ 
+sla dit op “ESC daarna :wq! En druk op enter” 
+
+systemctl restart smb.service 
+
+ip address   “kopier het ip-adres (ip-adres begint altijd met 172. of 192. of 10.)
