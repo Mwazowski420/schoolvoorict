@@ -1,0 +1,136 @@
+Core01_ARN MLS:
+
+vtp domain SOLAR
+vtp mode server
+
+hostname Core01_ARN
+
+vlan 30
+name Productie
+exit
+vlan 40
+name Marketing
+exit
+vlan 50 
+name Gasten_WIFI
+
+ip dhcp excluded-address 10.10.30.1 10.10.30.50
+ip dhcp excluded-address 10.10.40.1 10.10.40.50
+ip dhcp excluded-address 10.10.50.1 10.10.50.50
+
+ip dhcp pool vlan30
+ network 10.10.30.0 255.255.255.0
+ default-router 10.10.30.1
+ dns-server 62.36.55.85
+ip dhcp pool vlan40
+ network 10.10.40.0 255.255.255.0
+ default-router 10.10.40.1
+ dns-server 62.36.55.85
+ip dhcp pool vlan50
+ network 10.10.50.0 255.255.255.0
+ default-router 10.10.50.1
+ dns-server 62.36.55.85
+
+ip routing
+
+spanning-tree mode pvst
+spanning-tree vlan 1 priority 0
+
+interface FastEthernet0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport nonegotiate
+
+interface FastEthernet0/2
+ switchport mode access
+ switchport nonegotiate
+
+interface FastEthernet0/3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport nonegotiate
+
+
+
+interface Vlan1
+ ip address 10.10.0.2 255.255.255.0
+ shutdown
+
+interface Vlan30
+ip address 10.10.30.1 255.255.255.0
+
+interface Vlan40
+ip address 10.10.40.1 255.255.255.0
+
+interface Vlan50
+ip address 10.10.50.1 255.255.255.0
+ip access-group 150 in
+
+router ospf 1
+network 10.0.0.0 0.255.255.255 area 0
+
+
+access-list 150 deny ip 10.10.50.0 0.0.0.255 10.10.30.0 0.0.0.255
+access-list 150 deny ip 10.10.50.0 0.0.0.255 10.10.40.0 0.0.0.255
+access-list 150 deny ip 10.10.50.0 0.0.0.255 172.16.10.0 0.0.0.255
+access-list 150 deny ip 10.10.50.0 0.0.0.255 172.16.5.0 0.0.0.255
+access-list 150 deny ip 10.10.50.0 0.0.0.255 172.16.20.0 0.0.0.255
+access-list 150 permit ip any any
+
+SWITCH SW01-ARN:
+
+vtp domain SOLAR
+vtp mode server
+
+hostname SW01-ARN
+
+vtp domain SOLAR
+vtp mode client
+
+interface FastEthernet0/1
+ switchport mode trunk
+
+interface FastEthernet0/2
+
+interface FastEthernet0/3
+
+interface FastEthernet0/4
+ switchport access vlan 30
+
+interface FastEthernet0/5
+ switchport access vlan 30
+
+interface FastEthernet0/24
+ switchport mode trunk
+
+interface Vlan1
+ no ip address
+ shutdown
+
+
+SWITCH SW02-ARN:
+
+vtp domain SOLAR
+vtp mode server
+
+hostname SW02-ARN
+
+interface FastEthernet0/1
+
+interface FastEthernet0/2
+
+interface FastEthernet0/3
+ switchport mode trunk
+
+interface FastEthernet0/4
+ switchport access vlan 40
+
+interface FastEthernet0/23
+ switchport mode trunk
+
+interface GigabitEthernet0/1
+ switchport access vlan 40
+
+interface Vlan1
+ no ip address
+ shutdown
