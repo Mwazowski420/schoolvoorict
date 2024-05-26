@@ -1,0 +1,142 @@
+R1:
+
+en
+conf t
+interface GigabitEthernet0/0/0
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+
+MLS1-6:
+en
+conf t
+ip dhcp pool Afdeling50
+ network 192.168.50.0 255.255.255.0
+ default-router 192.168.50.1
+ dns-server 8.8.8.8
+exit
+interface Vlan50
+ip address 192.168.50.1 255.255.255.0
+exit
+
+ip dhcp excluded-address 192.168.10.101 192.168.10.255
+ip dhcp excluded-address 192.168.20.101 192.168.20.255
+ip dhcp excluded-address 192.168.30.101 192.168.30.255
+ip dhcp excluded-address 192.168.40.101 192.168.40.255
+ip dhcp excluded-address 192.168.50.101 192.168.50.255
+exit
+
+
+MLS2-7:
+en
+conf t
+interface GigabitEthernet1/0/5 
+no switchport
+ip address 192.168.1.2 255.255.255.0
+no shutdown
+exit
+
+interface range GigabitEthernet1/0/1-4
+switchport mode trunk
+exit
+
+ip dhcp pool Afdeling10
+ network 192.168.10.0 255.255.255.0
+ default-router 192.168.10.1
+ dns-server 8.8.8.8
+ip dhcp pool Afdeling20
+ network 192.168.20.0 255.255.255.0
+ default-router 192.168.20.1
+ dns-server 8.8.8.8
+ip dhcp pool Afdeling30
+ network 192.168.30.0 255.255.255.0
+ default-router 192.168.30.1
+ dns-server 8.8.8.8
+ip dhcp pool Afdeling40
+ network 192.168.40.0 255.255.255.0
+ default-router 192.168.40.1
+ dns-server 8.8.8.8
+ip dhcp pool Afdeling50
+ network 192.168.50.0 255.255.255.0
+ default-router 192.168.50.1
+ dns-server 8.8.8.8
+exit
+
+ip dhcp excluded-address 192.168.10.1 192.168.10.100
+ip dhcp excluded-address 192.168.20.1 192.168.20.100
+ip dhcp excluded-address 192.168.30.1 192.168.30.100
+ip dhcp excluded-address 192.168.40.1 192.168.40.100
+ip dhcp excluded-address 192.168.50.1 192.168.50.100
+exit
+
+ip routing
+
+interface Vlan10
+ip address 192.168.10.1 255.255.255.0
+
+interface Vlan20
+ip address 192.168.20.1 255.255.255.0
+
+interface Vlan30
+ip address 192.168.30.1 255.255.255.0
+
+interface Vlan40
+ip address 192.168.40.1 255.255.255.0
+
+interface Vlan50
+ip address 192.168.50.1 255.255.255.0
+exit
+
+router ospf 1
+network 192.168.0.0 0.0.255.255 area 0
+exit
+
+SWITCH0:
+en
+conf t
+
+interface FastEthernet0/3
+switchport access vlan 10
+exit
+
+interface FastEthernet0/4
+switchport access vlan 20
+exit
+
+SWITCH1:
+en
+conf t
+
+interface FastEthernet0/3
+switchport access vlan 30
+exit
+
+interface FastEthernet0/4
+switchport access vlan 40
+exit
+
+SWITCH2:
+en
+conf t
+
+interface FastEthernet0/3
+switchport access vlan 10
+exit
+
+interface FastEthernet0/4
+switchport access vlan 20
+exit
+
+SWITCH3:
+
+en
+conf t
+
+interface FastEthernet0/3
+switchport access vlan 30
+exit
+
+interface FastEthernet0/4
+switchport access vlan 50
+no shutdown
+exit
+

@@ -1,0 +1,140 @@
+MLS:
+en
+conf t
+vtp domain Geslaagd
+vtp mode server
+Vlan10 
+Vlan20
+Vlan30
+Vlan40
+Vlan50
+int Vlan10
+ip address 192.168.10.1 255.255.255.0
+int Vlan20
+ip address 192.168.20.1 255.255.255.0
+int Vlan30
+ip address 192.168.30.1 255.255.255.0
+int Vlan40
+ip address 192.168.40.1 255.255.255.0
+int Vlan50
+ip address 192.168.50.1 255.255.255.0
+exit
+
+ip dhcp pool VLAN10
+ network 192.168.10.0 255.255.255.0
+ default-router 192.168.10.1
+ip dhcp pool VLAN20
+ network 192.168.20.0 255.255.255.0
+ default-router 192.168.20.1
+ip dhcp pool VLAN30
+ network 192.168.30.0 255.255.255.0
+ default-router 192.168.30.1
+ip dhcp pool VLAN40
+ network 192.168.40.0 255.255.255.0
+ default-router 192.168.40.1
+ip dhcp pool VLAN50
+ network 192.168.50.0 255.255.255.0
+ default-router 192.168.50.1
+exit
+ip routing
+
+interface range GigabitEthernet1/0/2-4
+switchport mode trunk
+exit
+
+interface range GigabitEthernet1/0/1
+no switchport
+ip address 10.10.10.2 255.255.255.252
+exit
+
+router ospf 109
+network 192.168.10.0 0.0.0.255 area 1
+network 192.168.20.0 0.0.0.255 area 1
+network 192.168.30.0 0.0.0.255 area 1
+network 192.168.40.0 0.0.0.255 area 1
+network 192.168.50.0 0.0.0.255 area 1
+network 10.10.10.0 0.0.0.3 area 1
+
+SWITCH 1,2,3:
+
+en 
+conf t
+interface FastEthernet0/1
+switchport mode trunk
+
+interface range FastEthernet0/1-4
+switchport access vlan 10
+
+interface range FastEthernet0/5-9
+switchport access vlan 20
+
+interface range FastEthernet0/10-14
+switchport access vlan 30
+
+interface range FastEthernet0/15-19
+switchport access vlan 40
+
+interface range FastEthernet0/20-24
+switchport access vlan 50
+exit
+
+vtp domain Geslaagd
+vtp mode client
+
+
+ROUTER1:
+VERGEET NIET OM DE MODULE TE VERANDEREN NAAR GLC-LG-SMD (VOOR GLASVEZEL)
+en
+conf t
+
+interface GigabitEthernet0/0/1
+ip address 10.10.10.1 255.255.255.252
+no shutdown
+exit
+
+interface GigabitEthernet0/0/2
+ip address 10.10.10.5 255.255.255.252
+no shutdown
+exit
+
+interface GigabitEthernet0/0/0
+ip address 10.10.11.1 255.255.255.252
+no shutdown
+exit
+
+router ospf 109
+network 10.10.10.0 0.0.0.3 area 1
+network 10.10.11.0 0.0.0.3 area 1
+network 10.10.10.4 0.0.0.3 area 1
+
+SERVER1:
+
+VERGEET NIET OM DE MODULE TE VERANDEREN NAAR PT-HOST-NM-1FGE
+GA NAAR DE CONFIG
+GA NAAR INTERFACE GigabitEthernet1
+IPv4 10.10.10.6
+Subnet Mask 10.10.10.5
+
+GA NAAR SETTINGS
+INTERFACES = GigabitEthernet1
+Default Gateway 10.10.10.5
+
+
+ROUTER0 (CLUSTER):
+
+en
+conf t
+
+interface GigabitEthernet0/0/1
+ip address 10.10.11.2 255.255.255.252
+no shutdown
+exit
+
+interface GigabitEthernet0/0/0
+ip address 192.168.100.1 255.255.255.0
+no shutdown
+exit
+
+router ospf 109
+network 192.168.100.0 0.0.0.255 area 1
+network 10.10.11.0 0.0.0.3 area 1
