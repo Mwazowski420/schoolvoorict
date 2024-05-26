@@ -1,0 +1,11 @@
+int range f0/10-11
+
+channel-group 1 mode active
+
+exit
+
+int port-channel 1
+
+sw mo tr
+
+sw tr all vlan 1,10,20

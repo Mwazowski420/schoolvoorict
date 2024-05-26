@@ -1,0 +1,27 @@
+import csv
+
+file = 'kassa.csv' (als alle bestanden in een map staan, is er geen padnaam nodig)
+
+inventaris = []
+
+totaalprijs = 0
+
+aantal = 0
+
+with open(file, mode='r', newline=' ') as fileOBJ: (met "with open" is het niet nodig om een closing statement te geven)
+
+fileCSV = csv.reader(fileOBJ, delimiter=' ; ')
+
+next(fileCSV)
+
+for line in fileCSV:
+
+inventaris.append(line)
+
+for line in inventaris:
+
+aantal += 1
+
+totaalprijs += float(line[1])
+
+print(f"De gemiddelde prijs is: {totaalprijs/aantal}") ( de f voor de quotes houdt in dat er variables in de gequotes text zijn en gelijk opgepakt worden als variables)

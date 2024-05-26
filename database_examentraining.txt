@@ -1,0 +1,60 @@
+-- Verwijder de oude gebruiker (indien aanwezig)
+DROP USER IF EXISTS 'EXTR4'@'%';
+
+-- Maak een nieuwe gebruiker aan
+CREATE USER 'EXTR4'@'%' IDENTIFIED BY 'jouwWachtwoord';
+
+-- Geef rechten aan de nieuwe gebruiker
+GRANT SELECT, INSERT, UPDATE, DELETE ON MBO_ICT.Studenten TO 'EXTR4'@'%';
+GRANT SELECT ON MBO_ICT.Klassen TO 'EXTR4'@'%';
+GRANT SELECT ON MBO_ICT.Docenten TO 'EXTR4'@'%';
+
+
+
+SELECT * FROM Salarissen;
+
+
+
+
+
+SELECT salaris, docentnummer FROM Salarissen ORDER BY salaris DESC;
+
+
+
+SELECT docentnummer AS Medior, salaris FROM Salarissen WHERE salaris BETWEEN 3000 AND 4000;
+
+
+
+SELECT MIN(salaris) AS Minimum, MAX(salaris) AS Maximum, AVG(salaris) AS Gemiddeld FROM Salarissen;
+
+
+
+SELECT * FROM Salarissen WHERE docentnummer NOT IN (SELECT docentnummer FROM Docenten);
+
+
+
+SELECT D.docentnummer, D.voornaam, D.tussenvoegsel, D.achternaam, S.salaris 
+FROM Docenten D 
+JOIN Salarissen S ON D.docentnummer = S.docentnummer 
+ORDER BY S.salaris DESC;
+
+
+
+SELECT docentnummer, salaris FROM Salarissen 
+WHERE salaris > (SELECT AVG(salaris) FROM Salarissen);
+
+
+
+
+-- Verander salaris van docentnummer 7
+UPDATE Salarissen SET salaris = 4500 WHERE docentnummer = 7;
+
+-- Verwijder gegevens van docentnummer 8
+DELETE FROM Salarissen WHERE docentnummer = 8;
+
+-- Voeg nieuwe rij toe voor docentnummer 8
+INSERT INTO Salarissen (docentnummer, salaris) VALUES (8, 4600);
+
+
+
+

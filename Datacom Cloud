@@ -1,0 +1,20 @@
+ssh -l admin (ip)
+
+lldp
+commando's
+    show lldp neighbours (zie je de normale neigbours van de device)
+    show lldp neighbours detail (hierbij krijg je meer informatie portnummer enzov.)
+    show ip int br 
+    show arp (hiermee kan je de mac-addressen zien en koppelen aan de devices)
+    show run
+cdp
+commando's
+    show cdp neighbours
+    show cdp neigbours detail
+    show cdp entry "devicename" ~voorbeeld(show cdp entry Edge1)
+    show cdp entry * (laat alle neighbours zien met ip)
+
+
+
+
+sh interfaces gigethernet5/0 of iets anders

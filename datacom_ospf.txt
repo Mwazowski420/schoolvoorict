@@ -1,0 +1,7 @@
+do show ip protocol
+
+router ospf 1
+
+netw 10.10.0.0 0.0.255.255 area 0
+
+netw 192.168.0.0 0.0.0.255 area 0

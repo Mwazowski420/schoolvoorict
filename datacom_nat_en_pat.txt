@@ -1,0 +1,17 @@
+access-list 1 permit 172.16.0.0 0.0.255.255
+
+ip nat pool ANY_POOL_NAME 209.165.200.233 209.165.200.234 netmask 255.255.255.252
+
+ip nat inside source list 1 pool ANY_POOL_NAME overload
+
+interface s0/1/0
+
+ip nat outside
+
+interface g0/0/0
+
+ip nat inside
+
+interface g0/0/1
+
+ip nat inside
