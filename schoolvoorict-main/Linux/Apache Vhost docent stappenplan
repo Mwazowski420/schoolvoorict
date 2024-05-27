@@ -1,0 +1,47 @@
+Virtuele hosts 
+
+Een stap verder is het hosten van meerdere websites op één server. Voor elke distributie moet je uitzoeken welke configuratiebestanden je moet bewerken. Hierna een stappenplan voor Suse voor een configuratie binnen een subnet. Wil je dit in de praktijk uitproberen, dan moet je ook een DNS-server configureren. Wij doen het binnen het netwerk met het bestand /etc/hosts. 
+
+Serverconfiguratie 
+
+Doel: op één server laten draaien van een website voornaam en een website achternaam (vul in de opdracht jouw eigen voor- en achternaam in). 
+
+Tip 
+
+Voer de volgende stappen zorgvuldig uit. Kijk goed naar bestandsnamen en locaties! 
+
+Ga naar de map /srv/www/vhosts (of maak deze map). 
+
+Maak hierin de map voornaam.test en de map achternaam.test. 
+
+Plaats in de map voornaam.test een werkende index.html waaruit blijkt dat dit de website van voornaam is. Plaats vervolgens in de map achternaam.test een bestand index.html waaruit blijkt dat dit de site van achternaam is. 
+
+Ga naar de map /etc/apache2/vhosts.d en bekijk met cat het voorbeeldbestand vhost.template. Lees dit door! 
+
+Maak twee kopieën van dit bestand: één met de naam voornaam.conf en één met de naam achternaam.conf in deze map. 
+
+Open om beurten deze bestanden met Vi. Vervang in het bestand voornaam.conf overal waar in het voorbeeldbestand dummy-host.example.com staat doorvoornaam.test en in het bestand achternaam.conf door achternaam.test. 
+
+Controleer in deze twee bestanden of vooraan in het bestand de regel <VirtualHost *:80> opgenomen is. Indien niet, typ dit dan als eerste regel. 
+
+Controleer de configuratie met het commando apache2ctl configtest. 
+
+Wanneer er Syntax OK staat, is de server geconfigureerd. 
+
+Clientconfiguratie 
+
+Omdat we niet met een DNS-server werken, gaan we in het bestand /etc/ hosts aangeven dat zowel de site voornaam.test als achternaam.test verwijst naar het IP-adres van de server. 
+
+Zorg dat je het IP-adres van de server weet. 
+
+Open op de client met Vi het bestand /etc/hosts. 
+
+Maak twee nieuwe regels onder de regel 127.0.0.1 localhost, waarbij x.x.x.x het IP-adres van de server is: 
+x.x.x.x voornaam.test 
+x.x.x.x achternaam.test 
+
+Open een browser en typ hierin http://voornaam.test. Als alles goed draait, zie je nu de site van voornaam. 
+
+Typ vervolgens http://achternaam.test in de browser. De site van achternaam moet verschijnen. 
+
+ 
