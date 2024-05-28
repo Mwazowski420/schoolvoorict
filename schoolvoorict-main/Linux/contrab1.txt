@@ -1,0 +1,50 @@
+Crontab maken:
+
+
+in dit voorbeeld maken we een backup
+
+Maak het script uitvoerbaar:
+chmod +x /path/to/backup_shares.sh
+
+Open de crontab voor de root-gebruiker:
+sudo crontab -e
+
+Voeg de volgende regel toe om het script dagelijks om middernacht uit te voeren:
+0 0 * * * /path/to/backup_shares.sh
+
+Controleer of de backup directory bestaat en voldoende ruimte heeft:
+mkdir -p /home/backup
+
+Controleer of rsync geïnstalleerd is:
+sudo zypper install rsync
+
+Voer het script handmatig uit om te controleren of alles correct werkt:
+sudo /path/to/backup_shares.sh
+
+Controleer de log file om zeker te zijn dat de backup goed is uitgevoerd:
+cat /var/log/backup.log
+
+
+zet dit in het script
+
+
+#!/bin/bash
+
+# Directories to backup
+SRC1="/home/secretaressen"
+SRC2="/home/makelaars"
+
+# Backup destination
+DEST="/backup"
+
+# Log file
+LOGFILE="/var/log/backup.log"
+
+# Create backup destination if it doesn't exist
+mkdir -p "$DEST"
+
+# Perform the backup using rsync
+echo "Backup started at $(date)" >> "$LOGFILE"
+rsync -av --delete "$SRC1" "$DEST/secretaressen" >> "$LOGFILE" 2>&1
+rsync -av --delete "$SRC2" "$DEST/makelaars" >> "$LOGFILE" 2>&1
+echo "Backup completed at $(date)" >> "$LOGFILE"
