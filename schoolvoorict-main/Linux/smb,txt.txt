@@ -1,0 +1,24 @@
+smb share rechten:
+sudo chown :makelaars /home/makelaars
+sudo chown :secretaressen /home/secretaressen
+sudo chmod 770 /home/makelaars
+sudo chmod 770 /home/secretaressen
+
+smb config file:
+[makelaars]
+path = /home/makelaars
+valid users = @makelaars @secretaressen
+write list = @makelaars
+read list = @secretaressen
+force group = makelaars
+create mask = 0660
+directory mask = 0770
+
+[secretaressen]
+path = /home/secretaressen
+valid users = @secretaressen @makelaars
+write list = @secretaressen
+read list = @makelaars
+force group = secretaressen
+create mask = 0660
+directory mask = 0770
